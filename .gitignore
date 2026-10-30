@@ -1,0 +1,10 @@
+__pycache__/
+web/files/
+.venv/
+*.log
+
+.reference/
+dist/
+*.zip
+
+.tools/

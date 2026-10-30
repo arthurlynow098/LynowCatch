@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LynowCatch — Capture o que importa</title>
+<meta name="description" content="Organize downloads de vídeo, áudio e GIF em um só lugar.">
+<link rel="icon" href="octopus.png">
+<meta property="og:title" content="LynowCatch — Muitos braços. Uma só ferramenta.">
+<meta property="og:image" content="lynowcatch-banner.png">
+<link rel="stylesheet" href="styles.css">
+<nav>
+<a class="brand" href="#">
+<img src="octopus.png" alt="Logo polvo">
+<span>Lynow<span>Catch</span>
+</span>
+</a>
+<div class="navlinks">
+<a href="#baixar">Downloader</a>
+<a href="#recursos">Recursos</a>
+<a href="#plataformas">Plataformas</a>
+<a href="#ajuda">Como funciona</a>
+</div>
+<div class="navright">
+<span class="small">Do link ao arquivo ↙</span>
+<button class="iconbtn" id="theme" aria-label="Alternar tema">◐</button>
+</div>
+</nav>
+<main class="frame">
+<div class="bar">
+<span>
+<span class="dot">
+</span>VÍDEO · ÁUDIO · GIF</span>
+<span>UMA FERRAMENTA. MUITAS POSSIBILIDADES.</span>
+</div>
+<section class="hero">
+<div>
+<div class="eyebrow">SEUS LINKS, EM BOAS MÃOS. OITO DELAS.</div>
+<h1>Capture o que<br>
+<em>importa.</em>
+</h1>
+<p class="lead">Vídeos, músicas e GIFs. Cole seus links, escolha o formato e deixe o polvo cuidar da sua próxima coleção.</p>
+<div class="tags">
+<span>↓ Downloads em lote</span>
+<span>MP4 · MP3 · GIF</span>
+<span>Sem conta</span>
+</div>
+</div>
+<div class="heroart">
+<img src="octopus.png" alt="Ilustração de um polvo em gravura sobre azul">
+<div class="artlabel">MUITOS BRAÇOS. UMA SÓ FERRAMENTA.</div>
+</div>
+</section>
+<section class="workspace" id="baixar">
+<div class="windowbar">
+<div class="dots">
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+</div>
+<span>LYNOWCATCH / CENTRAL DE DOWNLOADS</span>
+<span id="enginebadge" role="status">○ Verificando motor</span>
+</div>
+<div class="tool">
+<aside class="sidebar">
+<button class="active" data-tab="download">↙ &nbsp; Novo download</button>
+<button data-tab="history">◷ &nbsp; Histórico</button>
+<button data-tab="settings">⚙ &nbsp; Conexão</button>
+<div class="sidefoot">FEITO PARA EXPLORAR.<br>PRONTO PARA GUARDAR.<br>
+<br>LynowCatch / v0.2.0</div>
+</aside>
+<div class="main">
+<div id="download">
+<div class="topline">
+<h2>O próximo download começa aqui.</h2>
+</div>
+<p class="hint">Um link ou uma lista inteira. Você escolhe.</p>
+<div class="linkbox">
+<textarea id="urls" aria-label="Links para baixar" placeholder="Cole o link do vídeo, áudio ou GIF aqui…">
+</textarea>
+<div class="inputbottom">
+<span>Um link por linha · até 20 por vez</span>
+<button class="textbtn" id="paste">▣ Colar links</button>
+</div>
+</div>
+<div class="presets">
+<span>COMECE COM UM PERFIL</span>
+<button data-preset="video">▶ Vídeo Full HD</button>
+<button data-preset="audio">♫ Só o áudio</button>
+<button data-preset="light">↓ Vídeo leve</button>
+<button data-preset="gif">✦ Criar GIF</button>
+</div>
+<div class="options">
+<label>FORMATO DE SAÍDA<select id="format">
+<option value="mp4">Vídeo · MP4</option>
+<option value="mp3">Áudio · MP3</option>
+<option value="gif">Animação · GIF (até 15 s)</option>
+<option value="original">Arquivo original</option>
+</select>
+</label>
+<label>QUALIDADE<select id="quality">
+<option value="1080">Full HD · 1080p</option>
+<option value="720">HD · 720p</option>
+<option value="480">SD · 480p</option>
+<option value="2160">4K · 2160p</option>
+</select>
+</label>
+<button class="primary" id="add">Adicionar à fila ↙</button>
+</div>
+<details class="advanced">
+<summary>Recortar um trecho · opcional</summary>
+<div class="trimfields">
+<label>INÍCIO EM SEGUNDOS<input id="start" type="number" min="0" max="86400" placeholder="0">
+</label>
+<label>DURAÇÃO EM SEGUNDOS<input id="duration" type="number" min="0" max="3600" placeholder="Vídeo completo">
+</label>
+</div>
+<p>Deixe em branco para baixar tudo. GIFs têm até 15 segundos. O recorte ocorre após o download.</p>
+</details>
+<button class="textbtn" id="preview">⌕ Consultar primeiro link</button>
+<div id="previewbox" class="previewbox" role="status" hidden>
+</div>
+<div class="stats">
+<div>
+<b id="stat-total">0</b>
+<span>NA FILA</span>
+</div>
+<div>
+<b id="stat-done">0</b>
+<span>CONCLUÍDOS</span>
+</div>
+<div>
+<b id="stat-size">—</b>
+<span>GERADOS NESTA SESSÃO</span>
+</div>
+</div>
+<label class="sr-only" for="queueprogress">Proporção de downloads concluídos</label>
+<progress id="queueprogress" max="100" value="0">
+</progress>
+<div class="queueactions">
+<button id="pause" class="textbtn">Ⅱ Pausar fila</button>
+<button id="clearwaiting" class="textbtn">Remover pendentes</button>
+</div>
+<div class="queuehead">
+<span>FILA DE DOWNLOADS <span id="count">/ 00</span>
+</span>
+<button class="textbtn" id="clear">Limpar concluídos</button>
+</div>
+<div id="queue">
+</div>
+<div class="message" id="message" role="status">
+</div>
+</div>
+<div id="history" hidden>
+<h2>Seu histórico</h2>
+<p class="hint">Registros salvos neste navegador. Os arquivos ficam com você.</p>
+<label>BUSCAR NO HISTÓRICO<input id="historysearch" type="search" placeholder="Procure por um link…">
+</label>
+<div class="historyactions">
+<button class="textbtn" id="exporthistory">Exportar CSV ↓</button>
+</div>
+<div id="historylist">
+</div>
+<button class="textbtn" id="clearhistory">Apagar histórico</button>
+</div>
+<div id="settings" hidden>
+<h2>Conecte o motor de downloads.</h2>
+<p class="hint">Confira a conexão e as ferramentas disponíveis no seu computador.</p>
+<div class="setup">
+<b>Seu computador faz o trabalho pesado.</b>
+<p>Instale Python e FFmpeg e execute INICIAR.bat na pasta do projeto. No Linux ou macOS, siga o README.md. Abra localhost:8765 para usar a interface com o motor local.</p>
+<a class="primary" href="#ajuda">Consultar guia de instalação ↙</a>
+<div class="setupcontrols">
+<label>ENDEREÇO DO MOTOR<input id="endpoint" placeholder="http://localhost:8765">
+</label>
+<button class="primary" id="connect">Testar conexão</button>
+</div>
+<p id="connectionstatus" role="status">Verificando o motor local…</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="strip">
+<article>
+<h3>01 / Cole sem complicar</h3>
+<p>Organize vários links em uma única fila.</p>
+</article>
+<article>
+<h3>02 / Escolha sua saída</h3>
+<p>Vídeo em MP4, áudio em MP3 ou um GIF curto.</p>
+</article>
+<article>
+<h3>03 / Guarde do seu jeito</h3>
+<p>Downloads e conversões no seu computador.</p>
+</article>
+</div>
+<section class="section" id="recursos">
+<div class="eyebrow">MAIS CONTROLE. MENOS ETAPAS.</div>
+<h2>Uma central feita para a sua coleção.</h2>
+<div class="featuregrid">
+<article>
+<span>01 / ORGANIZAÇÃO</span>
+<h3>Sua fila, no seu ritmo.</h3>
+<p>Adicione até 20 links por vez, pause os próximos downloads, remova pendentes e tente novamente quando precisar.</p>
+</article>
+<article>
+<span>02 / FORMATOS</span>
+<h3>O arquivo certo para cada ideia.</h3>
+<p>MP4 até 4K, extração MP3, GIF de até 15 segundos ou o arquivo original. A resolução depende da fonte.</p>
+</article>
+<article>
+<span>03 / RECORTE</span>
+<h3>Guarde só o que interessa.</h3>
+<p>Escolha o início e a duração em segundos. O FFmpeg transforma o trecho em vídeo, áudio ou animação.</p>
+</article>
+<article>
+<span>04 / PRÉVIA</span>
+<h3>Conheça antes de baixar.</h3>
+<p>Consulte título, autor e duração do primeiro link. Informações disponíveis conforme a plataforma.</p>
+</article>
+<article>
+<span>05 / MEMÓRIA</span>
+<h3>Encontre de novo.</h3>
+<p>Pesquise os últimos 100 downloads, repita uma captura ou exporte o histórico em CSV.</p>
+</article>
+<article>
+<span>06 / LOCAL</span>
+<h3>Seu computador é a central.</h3>
+<p>Sem conta e sem upload para um servidor do LynowCatch. O motor acessa a plataforma de origem e salva o resultado localmente.</p>
+</article>
+</div>
+</section>
+<section class="section" id="plataformas">
+<div class="eyebrow">VÁRIAS ORIGENS. UM SÓ DESTINO.</div>
+<h2>A internet é grande. Seus braços também.</h2>
+<div class="platforms">
+<div>▶ YouTube<small>VÍDEO · ÁUDIO</small>
+</div>
+<div>𝕏 / Twitter<small>VÍDEO · GIF</small>
+</div>
+<div>◎ Instagram<small>REELS · VÍDEO</small>
+</div>
+<div>♪ TikTok<small>VÍDEO · ÁUDIO</small>
+</div>
+<div>v Vimeo<small>VÍDEO · ÁUDIO</small>
+</div>
+<div>↗ Outros sites<small>VIA YT-DLP</small>
+</div>
+</div>
+<p class="hint" style="margin-top:14px">Requer motor conectado. A disponibilidade varia por site, região e acesso ao conteúdo. Conteúdo privado ou protegido por DRM não é suportado.</p>
+</section>
+<section class="section guide" id="guia">
+<div class="eyebrow">DO PRIMEIRO LINK AO ÚLTIMO ARQUIVO.</div>
+<h2>Três passos. E está nas suas mãos.</h2>
+<div class="featuregrid steps">
+<article>
+<b>01</b>
+<h3>Abra sua central</h3>
+<p>Execute INICIAR.bat. O ambiente Python é preparado na pasta do projeto. Acesse localhost:8765 e confira o motor na aba Conexão.</p>
+</article>
+<article>
+<b>02</b>
+<h3>Escolha o que guardar</h3>
+<p>Cole os links, aplique um perfil e, se quiser, consulte a prévia ou defina um trecho para recortar.</p>
+</article>
+<article>
+<b>03</b>
+<h3>Faça sua coleção crescer</h3>
+<p>Acompanhe os estados da fila e clique em Salvar. Os resultados também ficam em web/files no seu computador.</p>
+</article>
+</div>
+</section>
+<section class="section" id="ajuda">
+<div class="eyebrow">SEM MISTÉRIO, SEM TENTÁCULOS SOLTOS.</div>
+<h2>Antes de apertar o download.</h2>
+<details>
+<summary>O site já baixa vídeos de todas as plataformas?</summary>
+<p>A interface online gerencia a fila. Para extrair vídeos de plataformas e converter formatos, execute o motor e confira a aba Conexão. Ele executa yt-dlp e FFmpeg localmente. Nenhuma ferramenta garante todos os sites: mudanças nas plataformas podem exigir atualizações.</p>
+</details>
+<details>
+<summary>Como usar o motor local?</summary>
+<p>Na pasta do projeto, leia LEIA-ME.md. Instale Python e FFmpeg, execute o iniciador e abra http://localhost:8765. Essa versão já vem conectada ao motor, sem depender da conexão entre o site online e seu computador.</p>
+</details>
+<details>
+<summary>Posso baixar vários links e criar GIFs?</summary>
+<p>Sim. Adicione até 20 links por vez. O motor processa um arquivo de cada vez e oferece o resultado para salvar. GIFs usam até 15 segundos a partir do início escolhido, a 12 quadros por segundo.</p>
+</details>
+<details>
+<summary>Que conteúdo posso baixar?</summary>
+<p>Use para conteúdo seu, de domínio público ou que você tenha autorização para baixar. Respeite os direitos dos criadores e as condições de cada plataforma.</p>
+</details>
+<details>
+<summary>O que significa pausar a fila?</summary>
+<p>A pausa impede o início dos próximos itens. O download que já está em processamento continua até terminar. Fechar a página não cancela uma tarefa já enviada ao motor.</p>
+</details>
+<details>
+<summary>Qual é o limite e como liberar espaço?</summary>
+<p>O arquivo final pode ter até 500 MB. A etapa de download tem limite de 10 minutos, e um recorte pode levar até mais 10 minutos. Para liberar espaço, apague os resultados em web/files. Apagar o histórico remove apenas os registros do navegador.</p>
+</details>
+<details>
+<summary>Por que um arquivo salvo no histórico não abre mais?</summary>
+<p>O link depende do motor ativo e do arquivo ainda existir em web/files. Se ele foi apagado, use Repetir para baixar novamente. A fila não é preservada ao recarregar a página.</p>
+</details>
+</section>
+<footer>
+<span>LynowCatch © 2026 · Muitos braços. Menos etapas.</span>
+<a href="https://github.com/arthurlynow098/LynowCut" target="_blank" rel="noopener">Visual inspirado no LynowCut ↗</a>
+</footer>
+</main>
+<script src="app.js">
+</script>
+</html>
